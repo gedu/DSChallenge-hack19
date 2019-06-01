@@ -1,3 +1,4 @@
+import 'package:dschallenge/home/challenge_item_list.dart';
 import 'package:dschallenge/home/challenges_provider.dart';
 import 'package:dschallenge/home/query_provider.dart';
 import 'package:dschallenge/models/challenge_item.dart';
@@ -50,21 +51,8 @@ class ChallengesList extends StatelessWidget {
       child: ListView.builder(
           itemCount: challenges.length,
           itemBuilder: (context, index) {
-            return _itemList(challenges[index]);
+            return ChallengeItemList(challenges[index], index);
           }),
-    );
-  }
-
-  Widget _itemList(ChallengeItem item) {
-    return Container(
-      color: Colors.indigo,
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          Text(item.title),
-          Text(item.desc),
-        ],
-      ),
     );
   }
 }
