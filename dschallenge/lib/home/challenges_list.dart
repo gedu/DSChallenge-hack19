@@ -20,7 +20,7 @@ class ChallengesList extends StatelessWidget {
         stream: _challenges.onChallenges,
         builder: (context, asyncSnapshot) {
           if (!asyncSnapshot.hasData) {
-            return Container();
+            return _loadingList();
           }
 
           return _handleChallengeStates(asyncSnapshot.data);

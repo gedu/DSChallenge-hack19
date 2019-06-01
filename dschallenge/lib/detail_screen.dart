@@ -25,9 +25,9 @@ class StackOverflowQuestion {
 
 class DetailScreen extends StatelessWidget {
   final List dataGitTest =
-      new List<String>.generate(10, (i) => "https://github.com/explore");
+  new List<String>.generate(10, (i) => "https://github.com/explore");
   final List dataStackOFTest =
-      new List<String>.generate(10, (i) => "https://stackoverflow.com");
+  new List<String>.generate(10, (i) => "https://stackoverflow.com");
 
   final ChallengeItem item;
 
@@ -42,6 +42,15 @@ class DetailScreen extends StatelessWidget {
           tag: "ChallengeImg${item.title}",
           child: Image.network(item.imageUrl),
         ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _showDialog(context);
+        },
+        tooltip: 'Accept Challenge',
+        child: Icon(Icons.add),
+        elevation: 2.0,
       ),
       bottomNavigationBar: BottomAppBar(
         child: new Row(
@@ -59,7 +68,7 @@ class DetailScreen extends StatelessWidget {
               icon: new Image.asset('assets/images/stackoverflow.png'),
               iconSize: 50,
               onPressed: () {
-                _stackOverModalBottomSheet(context);
+                _stackOverModalBottomSheet(context, item.tags.split(' ')[0]);
               },
             ),
           ],
@@ -86,12 +95,12 @@ class DetailScreen extends StatelessWidget {
         });
   }
 
-  void _stackOverModalBottomSheet(context) {
+  void _stackOverModalBottomSheet(context, tag) {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext bc) {
           return new FutureBuilder(
-            future: _getData(),
+            future: _getData(tag),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.none:
@@ -116,11 +125,11 @@ class DetailScreen extends StatelessWidget {
     }
   }
 
-  Future<List<StackOverflowQuestion>> _getData() async {
+  Future<List<StackOverflowQuestion>> _getData(String tag) async {
     var values = new List<StackOverflowQuestion>();
 
     final response = await http.get(
-        'https://api.stackexchange.com/2.2/search?page=1&pagesize=10&order=desc&sort=activity&tagged=flutter&intitle=chat&site=stackoverflow&key=crMKL43ChbI5neEFEi6A)A((');
+        'https://api.stackexchange.com/2.2/search?page=1&pagesize=10&order=desc&sort=activity&tagged=flutter&intitle='+tag+'&site=stackoverflow&key=crMKL43ChbI5neEFEi6A)A((');
     if (response.statusCode == 200) {
       List<dynamic> items = json.decode(response.body)['items'];
       items.forEach((item) {
@@ -147,6 +156,36 @@ class DetailScreen extends StatelessWidget {
             new Divider(
               height: 2.0,
             ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showDialog(context) {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Accept Challenge?"),
+          content: TextField(
+            decoration: InputDecoration(hintText: "Github url which solve it"),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: const Text('CANCEL'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: const Text('ACCEPT'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            )
           ],
         );
       },
