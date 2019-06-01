@@ -25,9 +25,9 @@ class StackOverflowQuestion {
 
 class DetailScreen extends StatelessWidget {
   final List dataGitTest =
-  new List<String>.generate(10, (i) => "https://github.com/explore");
+      new List<String>.generate(10, (i) => "https://github.com/explore");
   final List dataStackOFTest =
-  new List<String>.generate(10, (i) => "https://stackoverflow.com");
+      new List<String>.generate(10, (i) => "https://stackoverflow.com");
 
   final ChallengeItem item;
 
@@ -36,20 +36,25 @@ class DetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: AppBar(title: const Text('Detail')),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[Image.network(item.imageUrl)],
+        child: Stack(
+          children: <Widget>[
+            Positioned.fill(
+                child: Image.network(
+              item.imageUrl,
+              fit: BoxFit.cover,
+            )),
+          ],
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           _showDialog(context);
         },
         tooltip: 'Accept Challenge',
-        child: Icon(Icons.add),
+        icon: Icon(Icons.add),
+        label: Text('Accept Challenge'),
         elevation: 2.0,
       ),
       bottomNavigationBar: BottomAppBar(
