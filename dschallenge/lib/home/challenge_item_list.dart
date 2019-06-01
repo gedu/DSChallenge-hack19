@@ -34,12 +34,7 @@ class ChallengeItemList extends StatelessWidget {
   Widget _rowWithLeftImage() {
     return Row(
       children: <Widget>[
-        Container(
-          width: 160,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: NetworkImage(_item.imageUrl), fit: BoxFit.fitHeight)),
-        ),
+        _rowImage(),
         Expanded(
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -58,6 +53,18 @@ class ChallengeItemList extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: _details(),
           ),
+        ),
+        _rowImage(),
+      ],
+    );
+  }
+
+  Widget _rowImage() {
+    return Stack(
+      children: <Widget>[
+        Container(
+          width: 160,
+          color: Colors.black12,
         ),
         Container(
           width: 160,
