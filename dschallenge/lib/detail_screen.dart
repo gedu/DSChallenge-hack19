@@ -37,10 +37,10 @@ class DetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: AppBar(title: const Text('Detail')),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[Image.network(item.imageUrl)],
+      body: SizedBox.expand(
+        child: Hero(
+          tag: "ChallengeImg${item.title}",
+          child: Image.network(item.imageUrl),
         ),
       ),
       bottomNavigationBar: BottomAppBar(

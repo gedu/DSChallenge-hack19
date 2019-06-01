@@ -34,11 +34,14 @@ class ChallengeItemList extends StatelessWidget {
   Widget _rowWithLeftImage() {
     return Row(
       children: <Widget>[
-        Container(
-          width: 160,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: NetworkImage(_item.imageUrl), fit: BoxFit.fitHeight)),
+        Hero(
+          tag: "ChallengeImg${_item.title}",
+          child: Container(
+            width: 160,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: NetworkImage(_item.imageUrl), fit: BoxFit.fitHeight)),
+          ),
         ),
         Expanded(
           child: Padding(
