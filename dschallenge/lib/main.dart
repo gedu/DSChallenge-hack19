@@ -1,8 +1,8 @@
 import 'package:dschallenge/home/home_screen.dart';
 import 'package:flutter/material.dart';
-import 'stackoverflow.dart';
+import 'detail_screen.dart';
 
-void main() => runApp(ListStackOverflowPostsApp());
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
