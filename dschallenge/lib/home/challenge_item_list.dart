@@ -66,11 +66,14 @@ class ChallengeItemList extends StatelessWidget {
           width: 160,
           color: Colors.black12,
         ),
-        Container(
-          width: 160,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: NetworkImage(_item.imageUrl), fit: BoxFit.fitHeight)),
+        Hero(
+          tag: "ChallengeImg${_item.title}",
+          child: Container(
+            width: 160,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: NetworkImage(_item.imageUrl), fit: BoxFit.fitHeight)),
+          ),
         ),
       ],
     );
