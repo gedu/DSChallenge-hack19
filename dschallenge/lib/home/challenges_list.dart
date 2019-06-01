@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ChallengesList extends StatelessWidget {
-  QueryProvider _query;
+  final QueryProvider _query;
   ChallengesProvider _challenges;
 
   ChallengesList(this._query);
@@ -14,7 +14,7 @@ class ChallengesList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ChallengesProvider>(builder: (context, value, _) {
       _challenges = value;
-      _challenges.fetchChallenges();
+      _challenges.fetchChallenges(_query.query);
       return StreamBuilder(
         stream: _challenges.onChallenges,
         builder: (context, asyncSnapshot) {

@@ -19,6 +19,7 @@ class ProviderState {
 class ChallengesProvider {
   RemoteService _service;
 
+  List<ChallengeItem> _challenges;
   StreamController<ProviderState> _challengeController =
       StreamController.broadcast();
 
@@ -26,12 +27,30 @@ class ChallengesProvider {
 
   ChallengesProvider(this._service);
 
-  void fetchChallenges() async {
+  void fetchChallenges(String query) async {
+    if (_challenges == null) {
+      await _initialFetch();
+    }
+
+    if (query.isEmpty) {
+      _challengeController.add(ProviderState.success(_challenges));
+    } else {
+      _filterChallengesBy(query);
+    }
+  }
+
+  Future<void> _initialFetch() async {
     _challengeController.add(ProviderState.loading());
 
     final challenges = await _service.fetchAllChallenges();
 
-    _challengeController.add(ProviderState.success(challenges));
+    _challenges = challenges;
+  }
+
+  void _filterChallengesBy(String query) {
+    final filteredList =
+        _challenges.where((item) => item.tags.contains(query)).toList();
+    _challengeController.add(ProviderState.success(filteredList));
   }
 
   void dispose() {

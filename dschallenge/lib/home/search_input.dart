@@ -1,11 +1,17 @@
 import 'package:dschallenge/home/query_provider.dart';
 import 'package:flutter/material.dart';
 
-class SearchInput extends StatelessWidget {
+class SearchInput extends StatefulWidget {
   final QueryProvider _query;
-  final _queryTextController = TextEditingController();
 
   SearchInput(this._query);
+
+  @override
+  _SearchInputState createState() => _SearchInputState();
+}
+
+class _SearchInputState extends State<SearchInput> {
+  final _queryController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +46,17 @@ class SearchInput extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.only(bottom: 8),
       child: TextField(
-        controller: _queryTextController,
+        decoration: InputDecoration(
+            hintText: "Tags",
+            suffixIcon: IconButton(
+                icon: Icon(Icons.clear),
+                onPressed: () {
+                  _queryController.clear();
+                  widget._query.query = "";
+                })),
+        controller: _queryController,
         onSubmitted: (text) {
-          _query.query = text;
+          widget._query.query = text;
         },
       ),
     );
