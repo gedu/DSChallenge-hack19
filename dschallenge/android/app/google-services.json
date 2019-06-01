@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "38380944082",
+    "firebase_url": "https://dschallenger-275e4.firebaseio.com",
+    "project_id": "dschallenger-275e4",
+    "storage_bucket": "dschallenger-275e4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:38380944082:android:82cec5fdfada5461",
+        "android_client_info": {
+          "package_name": "com.hack19.dschallenge"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "38380944082-ik1ajleduf1g0vkh3nnb39khem1n06i9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hack19.dschallenge",
+            "certificate_hash": "a642c8afa0d6c63b79c44122c58468a07f28d6de"
+          }
+        },
+        {
+          "client_id": "38380944082-g4968p0id2djgtu2ioil13u6fdlnoicj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmUUuZMPupXAVCj20ojeX9BRgYXbudE0Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "38380944082-g4968p0id2djgtu2ioil13u6fdlnoicj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

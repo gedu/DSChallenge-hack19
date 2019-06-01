@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'stackoverflow.dart';
+import 'detail_screen.dart';
 
 void main() => runApp(ListStackOverflowPostsApp());
 
@@ -103,10 +104,14 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: _testOpen,
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  void _testOpen(){
+    Navigator.push(context, MaterialPageRoute(builder: (context) => DetailScreen()),);
   }
 }
