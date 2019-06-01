@@ -1,5 +1,9 @@
+import 'package:dschallenge/pinterest/api/client.dart';
+import 'package:dschallenge/pinterest/pins_screen.dart';
+import 'package:dschallenge/pinterest/state/PDKState.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 class TestScreen extends StatefulWidget {
   @override
@@ -7,10 +11,7 @@ class TestScreen extends StatefulWidget {
 }
 
 class _TestScreenState extends State<TestScreen> {
-
   static const pdkPlatform = const MethodChannel('pinterest.pdf/auth');
-
-  var textString = 'Hello';
 
   @override
   Widget build(BuildContext context) {
@@ -19,26 +20,30 @@ class _TestScreenState extends State<TestScreen> {
         title: Text('Do Something'),
       ),
       body: Center(
-        child: GestureDetector(
-          onTap: _getAuth,
-          child: Text(textString),
-        ),
+        child: Text('Hello'),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _getAuth,
+        child: Icon(Icons.file_upload),
       ),
     );
   }
 
   void _getAuth() async {
-    String authResponse;
     try {
-      final String result =
-          await pdkPlatform.invokeMethod('startAuth');
-      authResponse = 'Auth $result';
+      final String result = await pdkPlatform.invokeMethod('startAuth');
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => ChangeNotifierProvider<PDKState>(
+                builder: (BuildContext context) => PDKState(Client()),
+                child: PinsScreen(
+                  accessToken: result,
+                ),
+              ),
+        ),
+      );
     } on PlatformException catch (e) {
-      authResponse = "Failed to get auth token: '${e.message}'.";
+      e.toString();
     }
-
-    setState(() {
-      textString = authResponse;
-    });
   }
 }

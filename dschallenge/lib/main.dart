@@ -1,4 +1,5 @@
 import 'package:dschallenge/home/home_screen.dart';
+import 'package:dschallenge/pinterest/pins_screen.dart';
 import 'package:dschallenge/pinterest/test_screen.dart';
 import 'package:flutter/material.dart';
 
