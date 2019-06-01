@@ -1,4 +1,5 @@
 import 'package:dschallenge/home/home_screen.dart';
+import 'package:dschallenge/pinterest/test_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: HomeScreen(),
+      home: TestScreen(),
     );
   }
 }
