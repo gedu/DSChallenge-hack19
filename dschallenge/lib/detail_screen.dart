@@ -59,7 +59,7 @@ class DetailScreen extends StatelessWidget {
               icon: new Image.asset('assets/images/stackoverflow.png'),
               iconSize: 50,
               onPressed: () {
-                _stackOverModalBottomSheet(context);
+                _stackOverModalBottomSheet(context, item.tags.split(' ')[0]);
               },
             ),
           ],
@@ -86,12 +86,12 @@ class DetailScreen extends StatelessWidget {
         });
   }
 
-  void _stackOverModalBottomSheet(context) {
+  void _stackOverModalBottomSheet(context, tag) {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext bc) {
           return new FutureBuilder(
-            future: _getData(),
+            future: _getData(tag),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.none:
@@ -116,11 +116,11 @@ class DetailScreen extends StatelessWidget {
     }
   }
 
-  Future<List<StackOverflowQuestion>> _getData() async {
+  Future<List<StackOverflowQuestion>> _getData(String tag) async {
     var values = new List<StackOverflowQuestion>();
 
     final response = await http.get(
-        'https://api.stackexchange.com/2.2/search?page=1&pagesize=10&order=desc&sort=activity&tagged=flutter&intitle=chat&site=stackoverflow&key=crMKL43ChbI5neEFEi6A)A((');
+        'https://api.stackexchange.com/2.2/search?page=1&pagesize=10&order=desc&sort=activity&tagged=flutter&intitle='+tag+'&site=stackoverflow&key=crMKL43ChbI5neEFEi6A)A((');
     if (response.statusCode == 200) {
       List<dynamic> items = json.decode(response.body)['items'];
       items.forEach((item) {
