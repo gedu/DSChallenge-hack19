@@ -1,6 +1,8 @@
 import 'package:dschallenge/models/challenge_item.dart';
 import 'package:flutter/material.dart';
 
+import '../detail_screen.dart';
+
 class ChallengeItemList extends StatelessWidget {
   List<Color> colors = const [
     Colors.blue,
@@ -18,7 +20,9 @@ class ChallengeItemList extends StatelessWidget {
   Widget build(BuildContext context) {
     final cell = _index % 2 == 0 ? _rowWithLeftImage() : _rowWithRightImage();
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        _openDetail(context, _item);
+      },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 8),
         height: 250,
@@ -150,5 +154,10 @@ class ChallengeItemList extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _openDetail(BuildContext context, ChallengeItem _item) {
+    Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => DetailScreen(item: _item)));
   }
 }

@@ -1,9 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
-
-import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
+
+import 'models/challenge_item.dart';
 
 class StackOverflowQuestion {
   final int questionId;
@@ -22,8 +24,15 @@ class StackOverflowQuestion {
 }
 
 class DetailScreen extends StatelessWidget {
-  List dataGitTest = new List<String>.generate(10, (i) => "https://github.com/explore");
-  List dataStackOFTest = new List<String>.generate(10, (i) => "https://stackoverflow.com");
+  final List dataGitTest =
+      new List<String>.generate(10, (i) => "https://github.com/explore");
+  final List dataStackOFTest =
+      new List<String>.generate(10, (i) => "https://stackoverflow.com");
+
+  final ChallengeItem item;
+
+  DetailScreen({this.item});
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -31,10 +40,7 @@ class DetailScreen extends StatelessWidget {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text("TEST"),
-            Image(image: AssetImage('assets/images/github.png'))
-          ],
+          children: <Widget>[Image.network(item.imageUrl)],
         ),
       ),
       bottomNavigationBar: BottomAppBar(
@@ -68,18 +74,17 @@ class DetailScreen extends StatelessWidget {
         builder: (BuildContext bc) {
           return Container(
             child: new ListView.builder(
-                itemCount: dataGitTest.length,
+                itemCount: item.githubLinks.length,
                 itemBuilder: (context, index) {
                   return ListTile(
                     leading: new Icon(Icons.person),
-                    title: new Text(dataGitTest[index]),
-                    onTap: () => _launchURL(dataGitTest[index]),
+                    title: new Text(item.githubLinks[index]),
+                    onTap: () => _launchURL(item.githubLinks[index]),
                   );
                 }),
           );
         });
   }
-
 
   void _stackOverModalBottomSheet(context) {
     showModalBottomSheet(
@@ -91,9 +96,7 @@ class DetailScreen extends StatelessWidget {
               switch (snapshot.connectionState) {
                 case ConnectionState.none:
                 case ConnectionState.waiting:
-                  return new Center(
-                      child: CircularProgressIndicator()
-                  );
+                  return new Center(child: CircularProgressIndicator());
                 default:
                   if (snapshot.hasError)
                     return new Text('Error: ${snapshot.error}');
@@ -116,7 +119,8 @@ class DetailScreen extends StatelessWidget {
   Future<List<StackOverflowQuestion>> _getData() async {
     var values = new List<StackOverflowQuestion>();
 
-    final response = await http.get('https://api.stackexchange.com/2.2/search?page=1&pagesize=10&order=desc&sort=activity&tagged=flutter&intitle=chat&site=stackoverflow&key=crMKL43ChbI5neEFEi6A)A((');
+    final response = await http.get(
+        'https://api.stackexchange.com/2.2/search?page=1&pagesize=10&order=desc&sort=activity&tagged=flutter&intitle=chat&site=stackoverflow&key=crMKL43ChbI5neEFEi6A)A((');
     if (response.statusCode == 200) {
       List<dynamic> items = json.decode(response.body)['items'];
       items.forEach((item) {
@@ -140,7 +144,9 @@ class DetailScreen extends StatelessWidget {
                 _launchURL(values[index].link);
               },
             ),
-            new Divider(height: 2.0,),
+            new Divider(
+              height: 2.0,
+            ),
           ],
         );
       },
