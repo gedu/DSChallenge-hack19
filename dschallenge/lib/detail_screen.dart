@@ -25,9 +25,9 @@ class StackOverflowQuestion {
 
 class DetailScreen extends StatelessWidget {
   final List dataGitTest =
-      new List<String>.generate(10, (i) => "https://github.com/explore");
+  new List<String>.generate(10, (i) => "https://github.com/explore");
   final List dataStackOFTest =
-      new List<String>.generate(10, (i) => "https://stackoverflow.com");
+  new List<String>.generate(10, (i) => "https://stackoverflow.com");
 
   final ChallengeItem item;
 
@@ -42,6 +42,15 @@ class DetailScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[Image.network(item.imageUrl)],
         ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _showDialog(context);
+        },
+        tooltip: 'Accept Challenge',
+        child: Icon(Icons.add),
+        elevation: 2.0,
       ),
       bottomNavigationBar: BottomAppBar(
         child: new Row(
@@ -147,6 +156,36 @@ class DetailScreen extends StatelessWidget {
             new Divider(
               height: 2.0,
             ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showDialog(context) {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Accept Challenge?"),
+          content: TextField(
+            decoration: InputDecoration(hintText: "Github url which solve it"),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: const Text('CANCEL'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: const Text('ACCEPT'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            )
           ],
         );
       },
